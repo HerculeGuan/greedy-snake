@@ -1,1 +1,1 @@
-console.log('snake');
+import "./style/index.less"
