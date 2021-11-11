@@ -17,7 +17,34 @@ class Food {
         this.element.style.top = `${randomRight}px`
     }
 }
+
+
+class ScorePanel {
+    score = 0;
+    level = 1;
+    scoreElement: HTMLElement;
+    levelElement: HTMLElement;
+    constructor() {
+        this.scoreElement = document.getElementById('score')!
+        this.levelElement = document.getElementById('level')!
+    }
+    addScore() {
+        this.scoreElement.innerHTML = ++this.score + ''
+    }
+    addLevel() {
+        if (this.level < 10) {
+            this.levelElement.innerHTML = ++this.level + ''
+        }
+
+    }
+
+}
+
 const food = new Food();
+const scorePanel = new ScorePanel();
+
 setInterval(() => {
     food.changePosition()
+    scorePanel.addScore()
+    scorePanel.addLevel()
 }, 1000)
