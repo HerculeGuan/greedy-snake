@@ -3,5 +3,5 @@ import GameControl from "./modules/GameControl"
 
 const game = new GameControl()
 setInterval(() => {
-    console.log(game.direction);
+    game.move
 }, 500)

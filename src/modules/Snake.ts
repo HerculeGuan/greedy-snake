@@ -4,10 +4,12 @@ class Snake {
     bodies: HTMLCollection;
     constructor() {
         this.element = document.getElementById('snake')!
-        this.head = document.querySelector("#snake > div")!
+        this.head = document.querySelector("#snake div")!
         this.bodies = this.element.getElementsByTagName('div')
     }
     get x() {
+        console.log(this.head.offsetLeft);
+        
         return this.head.offsetLeft
     }
     get y() {
