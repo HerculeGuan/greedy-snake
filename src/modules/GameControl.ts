@@ -7,7 +7,7 @@ class GameControl {
     food: Food;
     scorePanel: ScorePanel;
     direction: string = 'ArrowRight';
-    isLive: Boolean = false
+    isLive: Boolean = true
     constructor() {
         this.snake = new Snake();
         this.food = new Food();
@@ -47,14 +47,30 @@ class GameControl {
                     break
             }
 
-            this.snake.x = x
-            this.snake.y = y
+            this.eat(x, y);
+
+            try {
+                this.snake.x = x
+                this.snake.y = y
+            }
+            catch (e: any) {
+                alert(e.message)
+                this.isLive = false
+            }
 
             this.isLive && this.move()
 
         }, speed)
 
+    }
 
+    eat(x: number, y: number) {
+        if (x === this.food.x && y === this.food.y) {
+            console.log('eat');
+            this.food.changePosition();
+            this.snake.addBody();
+            this.scorePanel.addScore();
+        }
 
     }
 }
