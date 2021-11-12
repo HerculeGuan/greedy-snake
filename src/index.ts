@@ -1,11 +1,7 @@
 import "./style/index.less"
-import Food from "./modules/Food"
-import ScorePanel from "./modules/ScorePanel"
+import GameControl from "./modules/GameControl"
 
-const food = new Food();
-const scorePanel = new ScorePanel();
-
+const game = new GameControl()
 setInterval(() => {
-    food.changePosition()
-    scorePanel.addScore()
-}, 1000)
+    console.log(game.direction);
+}, 500)
