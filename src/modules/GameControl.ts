@@ -7,7 +7,8 @@ class GameControl {
     food: Food;
     scorePanel: ScorePanel;
     direction: string = 'ArrowRight';
-    isLive: Boolean = true
+    isLive: Boolean = true;
+    timer: any;
     constructor() {
         this.snake = new Snake();
         this.food = new Food();
@@ -16,52 +17,50 @@ class GameControl {
     }
     init() {
         document.addEventListener('keydown', this.keyDownHandler.bind(this))
-        this.move();
+        this.food.changePosition();
     }
     keyDownHandler(event: KeyboardEvent) {
-        console.log(this.direction);
+        if (this.timer) {
+            clearInterval(this.timer)
+        }
         this.direction = event.key
+        let speed = 330 - this.scorePanel.level * 30
+        this.timer = setInterval(() => {
+            this.isLive && this.move();
+        }, speed);
     }
     move() {
-        let speed = 330 - this.scorePanel.level * 30
+        let x = this.snake.x;
+        let y = this.snake.y;
+        switch (this.direction) {
+            case 'ArrowUp':
+            case 'Up':
+                y -= 10
+                break
+            case 'ArrowDown':
+            case 'Down':
+                y += 10
+                break
+            case 'ArrowLeft':
+            case 'Left':
+                x -= 10
+                break
+            case 'ArrowRight':
+            case 'Right':
+                x += 10
+                break
+        }
 
-        setTimeout(() => {
-            let x = this.snake.x;
-            let y = this.snake.y;
-            switch (this.direction) {
-                case 'ArrowUp':
-                case 'Up':
-                    y -= 10
-                    break
-                case 'ArrowDown':
-                case 'Down':
-                    y += 10
-                    break
-                case 'ArrowLeft':
-                case 'Left':
-                    x -= 10
-                    break
-                case 'ArrowRight':
-                case 'Right':
-                    x += 10
-                    break
-            }
+        this.eat(x, y);
 
-            this.eat(x, y);
-
-            try {
-                this.snake.x = x
-                this.snake.y = y
-            }
-            catch (e: any) {
-                alert(e.message)
-                this.isLive = false
-            }
-
-            this.isLive && this.move()
-
-        }, speed)
-
+        try {
+            this.snake.x = x
+            this.snake.y = y
+        }
+        catch (e: any) {
+            alert(e.message)
+            this.isLive = false
+        }
     }
 
     eat(x: number, y: number) {
